@@ -21,12 +21,7 @@ const DraggableGridItem: React.FC<DraggableGridItemProps> = ({ item, gridSize, g
   } = useSortable({ id: item.id });
 
   const style = {
-    position: 'absolute' as const,
-    left: `${item.x * (gridSize + gap)}px`,
-    top: `${item.y * (gridSize + gap)}px`,
-    // 暂时不使用，因为拖拽时，元素会超出边界
-    width: `${item.col * gridSize + (item.col - 1) * gap}px`,
-    height: `${item.row * gridSize + (item.row - 1) * gap}px`,
+    gridArea: `${item.y + 1} / ${item.x + 1} / ${item.y + item.row + 1} / ${item.x + item.col + 1}`,
     // 拖拽时应用transform，让元素跟随鼠标移动
     transform: CSS.Transform.toString(transform),
     transition: isDragging ? 'none' : 'all 0.3s ease',

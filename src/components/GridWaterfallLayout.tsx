@@ -69,6 +69,10 @@ const GridWaterfallLayout: React.FC<GridWaterfallLayoutProps> = ({
     const containerWidth = columns * (gridSize + gap) - gap;
     return {
       width: `${containerWidth}px`,
+      display: 'grid',
+      gridTemplateColumns: `repeat(${columns}, ${gridSize}px)`,
+      gridAutoRows: `${gridSize}px`,
+      gap: `${gap}px`,
       position: 'relative' as const
     };
   }, [columns, gridSize, gap]);
@@ -106,7 +110,7 @@ const GridWaterfallLayout: React.FC<GridWaterfallLayoutProps> = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentItems, columns, activeId]);
 
-  // 容器高度计算
+  // 容器高度计算 - CSS Grid 会自动处理高度
   const containerHeight = useMemo(() => {
     if (layoutItems.length === 0) return 0;
     const maxY = Math.max(...layoutItems.map(item => item.y + item.row));
@@ -139,10 +143,7 @@ const GridWaterfallLayout: React.FC<GridWaterfallLayoutProps> = ({
         >
           <div 
             className="grid-container" 
-            style={{
-              ...containerStyle,
-              height: `${containerHeight}px`
-            }}
+            style={containerStyle}
           >
             <GridLines
               showGrid={showGrid}
